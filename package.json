@@ -1,0 +1,9 @@
+{
+  "name": "yt_kbd_nav",
+  "version": "0.0.1",
+  "description": "YouTube Keyboard Navigation",
+  "author": "Philippe Fanaro",
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {}
+}
