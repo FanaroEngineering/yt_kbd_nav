@@ -5,8 +5,12 @@
   "author": "Philippe Fanaro",
   "license": "ISC",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
   "devDependencies": {
+    "typescript": "^5.0.4",
     "vite": "^4.3.0"
   }
 }
