@@ -5,5 +5,8 @@
   "author": "Philippe Fanaro",
   "license": "ISC",
   "main": "index.js",
-  "scripts": {}
+  "scripts": {},
+  "devDependencies": {
+    "vite": "^4.3.0"
+  }
 }
