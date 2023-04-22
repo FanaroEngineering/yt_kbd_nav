@@ -1,8 +1,8 @@
 {
-    "manifest_version": 2,
-    "name": "YouTube Kbd Nav",
+    "manifest_version": 3,
+    "name": "YT Kbd Nav",
     "author": "Philippe Fanaro",
-    "version": "1.0.2",
+    "version": "0.0.1",
     "description": "YouTube keyboard navigation to the max.",
     "content_scripts": [
       {
@@ -13,14 +13,8 @@
           "*://*.studio.youtube.com/*"
         ],
         "js": [
-          "content.dart.js"
+          "content.js"
         ]
       }
-    ],
-    "permissions": [
-      "clipboardWrite"
-    ],
-    "icons": {
-      "128": "favicon.png"
-    }
+    ]
   }
