@@ -88,7 +88,7 @@ function like() {
 }
 
 function dislike() {
-  const dislikeButton: HTMLButtonElement = document.querySelector('#segmented-like-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill')!;
+  const dislikeButton: HTMLButtonElement = document.querySelector('#segmented-dislike-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill')!;
   dislikeButton!.click();
 }
 
