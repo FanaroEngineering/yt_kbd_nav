@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Entry Point
 
-enum Shortcuts {
+export enum Shortcuts {
   Home = "q",
   TogglePlayerFocus = "\\",
   Like = "W",
