@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Entry Point
 
-export enum Shortcuts {
+enum Shortcuts {
   Home = "q",
   TogglePlayerFocus = "\\",
   Like = "W",
@@ -107,7 +107,10 @@ function calcPrevIndex(forwards: boolean = true) {
 }
 
 function thumbnailsMove(forwards: boolean = true) {
-  const thumbnails = document.querySelectorAll("ytd-rich-grid-media");
+  const tag = window.location.pathname.includes("results")
+    ? "ytd-video-renderer"
+    : "ytd-rich-item-renderer";
+  const thumbnails = document.querySelectorAll(tag);
 
   forwards ? currentThumbnailIndex++ : (currentThumbnailIndex === -1 ? null : currentThumbnailIndex--);
 
