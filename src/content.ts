@@ -1,17 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////
+// Entry Point
+
 enum Shortcuts {
-  ThumbForwards = "a",
-  ThumbBackwards = "s",
   Home = "q",
   TogglePlayerFocus = "\\",
+  Like = "W",
+  Dislike = "E",
+  ThumbForwards = "A",
+  ThumbBackwards = "S",
+  ThumbGo = "Enter",
 }
-
-const thumbnailIndex = 0;
-
-document.addEventListener("DOMContentLoaded", () => {
-  const thumbnails = document.querySelectorAll("ytd-thumbnail");
-
-  console.log(thumbnails);
-});
 
 document.body.addEventListener("keydown", (event) => {
   switch (event.key) {
@@ -21,33 +19,110 @@ document.body.addEventListener("keydown", (event) => {
     case Shortcuts.TogglePlayerFocus:
       togglePlayerFocus();
       break;
+    case Shortcuts.Like:
+      like();
+      break;
+    case Shortcuts.Dislike:
+      dislike();
+      break;
     case Shortcuts.ThumbForwards:
-      // TODO
+      thumbnailsMove(true);
       break;
     case Shortcuts.ThumbBackwards:
-      // TODO
+      thumbnailsMove(false);
+      break;
+    case Shortcuts.ThumbGo:
+      thumbGo();
       break;
   }
 });
+
+///////////////////////////////////////////////////////////////////////////////
+// Home Shortcut
 
 function home() {
   const logoIcon = document.querySelector("yt-icon") as HTMLButtonElement;
   logoIcon.click();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Video Player
+
+const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
+if (playerDiv) {
+  playerDiv.addEventListener('blur', (_) => decorateUnfocusedPlayer());
+  playerDiv.addEventListener('focus', () => decorateFocusedPlayer());
+}
+
 function togglePlayerFocus() {
   const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
 
+  if (playerDiv) 
+    document.activeElement === playerDiv ? playerDiv.blur() : playerDiv.focus();
+}
+
+function decorateFocusedPlayer() {
+  const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
+  
   if (playerDiv) {
-    if (document.activeElement === document.body) {
-      playerDiv.style.borderBottom = "#483D8B solid";
-      playerDiv.style.borderWidth = "0.5px";
-    } else {
-      playerDiv.style.borderBottom = "#FF8C00 solid";
-      playerDiv.style.borderWidth = "0.5px";
-    }
+    playerDiv.style.borderBottom = "#FF8C00 solid";
+    playerDiv.style.borderWidth = "0.5px";
   }
 }
 
-// TODO: Like, dislike buttons
-// TODO: Setting quality of the video
+function decorateUnfocusedPlayer() {
+  const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
+
+  if (playerDiv) {
+    playerDiv.style.borderBottom = "#483D8B solid";
+    playerDiv.style.borderWidth = "0.5px";
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Like & Dislike
+
+function like() {
+  const likeButton: HTMLButtonElement = document.querySelector('#segmented-like-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill')!;
+  likeButton!.click();
+}
+
+function dislike() {
+  const dislikeButton: HTMLButtonElement = document.querySelector('#segmented-like-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill')!;
+  dislikeButton!.click();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Thumbnails
+
+let currentThumbnailIndex = 0;
+let currentThumbnailAnchor: HTMLAnchorElement;
+
+function thumbnailsMove(forwards: boolean = true) {
+  const thumbnails = document.querySelectorAll("ytd-rich-grid-media");
+
+  if (forwards) {
+    if (currentThumbnailIndex < thumbnails.length - 1) currentThumbnailIndex++;
+  } else {
+    if (currentThumbnailIndex > 0) currentThumbnailIndex--;
+  }
+
+  const prevIndex = forwards ? currentThumbnailIndex - 1 : currentThumbnailIndex + 1;
+
+  const prevThumbnail = thumbnails[prevIndex] as HTMLElement;
+  prevThumbnail.style.outline = '';
+
+  const currentThumbnail = thumbnails[currentThumbnailIndex] as HTMLElement
+  currentThumbnail.style.outline = 'red solid';
+  currentThumbnail.focus();
+
+  currentThumbnailAnchor = currentThumbnail.querySelector('a') as HTMLAnchorElement;
+}
+
+function thumbGo() {
+  if (currentThumbnailAnchor) {
+    currentThumbnailAnchor.click();
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////
