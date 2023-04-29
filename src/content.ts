@@ -32,7 +32,7 @@ document.body.addEventListener("keydown", (event) => {
       thumbnailsMove(false);
       break;
     case Shortcuts.ThumbGo:
-      thumbGo();
+      event.ctrlKey ? thumbGo(true) : thumbGo(false)
       break;
   }
 });
@@ -95,33 +95,42 @@ function dislike() {
 ///////////////////////////////////////////////////////////////////////////////
 // Thumbnails
 
-let currentThumbnailIndex = 0;
+let currentThumbnailIndex = -1;
 let currentThumbnailAnchor: HTMLAnchorElement;
+
+function calcPrevIndex(forwards: boolean = true) {
+  if (forwards && currentThumbnailIndex >= 0) {
+    return currentThumbnailIndex - 1
+  } else if (!forwards && currentThumbnailIndex >= -1) {
+    return currentThumbnailIndex + 1
+  } else return -1;
+}
 
 function thumbnailsMove(forwards: boolean = true) {
   const thumbnails = document.querySelectorAll("ytd-rich-grid-media");
 
-  if (forwards) {
-    if (currentThumbnailIndex < thumbnails.length - 1) currentThumbnailIndex++;
-  } else {
-    if (currentThumbnailIndex > 0) currentThumbnailIndex--;
+  forwards ? currentThumbnailIndex++ : (currentThumbnailIndex === -1 ? null : currentThumbnailIndex--);
+
+  const prevIndex = calcPrevIndex(forwards);
+
+  if (prevIndex > -1) {
+    const prevThumbnail = thumbnails[prevIndex] as HTMLElement;
+    prevThumbnail.style.outline = '';
   }
 
-  const prevIndex = forwards ? currentThumbnailIndex - 1 : currentThumbnailIndex + 1;
+  if (currentThumbnailIndex >= 0) {
+    const currentThumbnail = thumbnails[currentThumbnailIndex] as HTMLElement
+    currentThumbnail.style.outline = 'red solid';
+    currentThumbnail.focus();
 
-  const prevThumbnail = thumbnails[prevIndex] as HTMLElement;
-  prevThumbnail.style.outline = '';
-
-  const currentThumbnail = thumbnails[currentThumbnailIndex] as HTMLElement
-  currentThumbnail.style.outline = 'red solid';
-  currentThumbnail.focus();
-
-  currentThumbnailAnchor = currentThumbnail.querySelector('a') as HTMLAnchorElement;
+    currentThumbnailAnchor = currentThumbnail.querySelector('a') as HTMLAnchorElement;
+  }
 }
 
-function thumbGo() {
+function thumbGo(ctrl: boolean = false) {
   if (currentThumbnailAnchor) {
-    currentThumbnailAnchor.click();
+    const link = currentThumbnailAnchor.href;
+    ctrl ? window.open(link, '_blank', 'noreferrer') : window.location.href = link;
   }
 }
 
