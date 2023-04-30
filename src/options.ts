@@ -19,42 +19,37 @@ const defaultShortcuts: YTShortcutsTable = {
 };
 
 async function initialSetup() {
+  const shortcuts = await chrome.storage.sync.get();
+
   const homeShortcutInput: HTMLInputElement =
     document.body.querySelector('input[name="home"]')!;
-  homeShortcutInput.value = (await chrome.storage.sync.get("home")).home;
+  homeShortcutInput.value = shortcuts.home || defaultShortcuts.home;
 
   const togglePlayerFocusShortcutInput: HTMLInputElement =
     document.body.querySelector('input[name="toggle-player-focus"]')!;
-  togglePlayerFocusShortcutInput.value = (
-    await chrome.storage.sync.get("togglePlayerFocus")
-  ).togglePlayerFocus;
+  togglePlayerFocusShortcutInput.value =
+    shortcuts.togglePlayerFocus || defaultShortcuts.togglePlayerFocus;
 
   const thumbForwardsInput: HTMLInputElement = document.body.querySelector(
     'input[name="forwards"]'
   )!;
-  thumbForwardsInput.value = (
-    await chrome.storage.sync.get("thumbForwards")
-  ).thumbForwards;
+  thumbForwardsInput.value = shortcuts.thumbForwards || defaultShortcuts.thumbForwards;
   const thumbBackwardsInput: HTMLInputElement = document.body.querySelector(
     'input[name="backwards"]'
   )!;
-  thumbBackwardsInput.value = (
-    await chrome.storage.sync.get("thumbBackwards")
-  ).thumbBackwards;
+  thumbBackwardsInput.value = shortcuts.thumbBackwards || defaultShortcuts.thumbBackwards;
   const thumbGoInput: HTMLInputElement = document.body.querySelector(
     'input[name="go-into-thumb-video"]'
   )!;
-  thumbGoInput.value = (await chrome.storage.sync.get("thumbGo")).thumbGo;
+  thumbGoInput.value = shortcuts.thumbGo || defaultShortcuts.thumbGo;
 
   const likeShortcutInput: HTMLInputElement =
     document.body.querySelector('input[name="like"]')!;
-  likeShortcutInput.value = (await chrome.storage.sync.get("like")).like;
+  likeShortcutInput.value = shortcuts.like || defaultShortcuts.like;
   const dislikeShortcutInput: HTMLInputElement = document.body.querySelector(
     'input[name="dislike"]'
   )!;
-  dislikeShortcutInput.value = (
-    await chrome.storage.sync.get("dislike")
-  ).dislike;
+  dislikeShortcutInput.value = shortcuts.dislike || defaultShortcuts.dislike;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
