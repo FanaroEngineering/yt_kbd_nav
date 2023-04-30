@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Entry Point
 
-enum Shortcuts {
+enum DefaultShortcuts {
   Home = "q",
   TogglePlayerFocus = "\\",
   Like = "W",
@@ -11,28 +11,30 @@ enum Shortcuts {
   ThumbGo = "Enter",
 }
 
-document.body.addEventListener("keydown", (event) => {
-  switch (event.key) {
-    case Shortcuts.Home:
+document.body.addEventListener("keydown", async (e) => {
+  console.log(await chrome.storage.sync.get());
+
+  switch (e.key) {
+    case (await chrome.storage.sync.get('home')).home:
       home();
       break;
-    case Shortcuts.TogglePlayerFocus:
+    case DefaultShortcuts.TogglePlayerFocus:
       togglePlayerFocus();
       break;
-    case Shortcuts.Like:
+    case (await chrome.storage.sync.get('like')).like:
       like();
       break;
-    case Shortcuts.Dislike:
+    case DefaultShortcuts.Dislike:
       dislike();
       break;
-    case Shortcuts.ThumbForwards:
+    case DefaultShortcuts.ThumbForwards:
       thumbnailsMove(true);
       break;
-    case Shortcuts.ThumbBackwards:
+    case DefaultShortcuts.ThumbBackwards:
       thumbnailsMove(false);
       break;
-    case Shortcuts.ThumbGo:
-      event.ctrlKey ? thumbGo(true) : thumbGo(false)
+    case DefaultShortcuts.ThumbGo:
+      e.ctrlKey ? thumbGo(true) : thumbGo(false)
       break;
   }
 });
