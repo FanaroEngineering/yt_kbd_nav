@@ -1,4 +1,4 @@
-interface YTShortcutsTable {
+export interface YTShortcutsTable {
   home: string;
   togglePlayerFocus: string;
   thumbForwards: string;

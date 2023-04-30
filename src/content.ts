@@ -1,40 +1,32 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Entry Point
 
-enum DefaultShortcuts {
-  Home = "q",
-  TogglePlayerFocus = "\\",
-  Like = "W",
-  Dislike = "E",
-  ThumbForwards = "A",
-  ThumbBackwards = "S",
-  ThumbGo = "Enter",
-}
+import { YTShortcutsTable } from "./options";
 
 document.body.addEventListener("keydown", async (e) => {
-  console.log(await chrome.storage.sync.get());
+  const currentShortcuts: YTShortcutsTable = await chrome.storage.sync.get();
 
   switch (e.key) {
-    case (await chrome.storage.sync.get('home')).home:
+    case currentShortcuts.home:
       home();
       break;
-    case DefaultShortcuts.TogglePlayerFocus:
+    case currentShortcuts.togglePlayerFocus:
       togglePlayerFocus();
       break;
-    case (await chrome.storage.sync.get('like')).like:
+    case currentShortcuts.like:
       like();
       break;
-    case DefaultShortcuts.Dislike:
+    case currentShortcuts.dislike:
       dislike();
       break;
-    case DefaultShortcuts.ThumbForwards:
+    case currentShortcuts.thumbForwards:
       thumbnailsMove(true);
       break;
-    case DefaultShortcuts.ThumbBackwards:
+    case currentShortcuts.thumbBackwards:
       thumbnailsMove(false);
       break;
-    case DefaultShortcuts.ThumbGo:
-      e.ctrlKey ? thumbGo(true) : thumbGo(false)
+    case currentShortcuts.thumbGo:
+      e.ctrlKey ? thumbGo(true) : thumbGo(false);
       break;
   }
 });
@@ -52,20 +44,20 @@ function home() {
 
 const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
 if (playerDiv) {
-  playerDiv.addEventListener('blur', (_) => decorateUnfocusedPlayer());
-  playerDiv.addEventListener('focus', () => decorateFocusedPlayer());
+  playerDiv.addEventListener("blur", (_) => decorateUnfocusedPlayer());
+  playerDiv.addEventListener("focus", () => decorateFocusedPlayer());
 }
 
 function togglePlayerFocus() {
   const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
 
-  if (playerDiv) 
+  if (playerDiv)
     document.activeElement === playerDiv ? playerDiv.blur() : playerDiv.focus();
 }
 
 function decorateFocusedPlayer() {
   const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
-  
+
   if (playerDiv) {
     playerDiv.style.borderBottom = "#FF8C00 solid";
     playerDiv.style.borderWidth = "0.5px";
@@ -85,12 +77,16 @@ function decorateUnfocusedPlayer() {
 // Like & Dislike
 
 function like() {
-  const likeButton: HTMLButtonElement = document.querySelector('#segmented-like-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill')!;
+  const likeButton: HTMLButtonElement = document.querySelector(
+    "#segmented-like-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill"
+  )!;
   likeButton!.click();
 }
 
 function dislike() {
-  const dislikeButton: HTMLButtonElement = document.querySelector('#segmented-dislike-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill')!;
+  const dislikeButton: HTMLButtonElement = document.querySelector(
+    "#segmented-dislike-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill"
+  )!;
   dislikeButton!.click();
 }
 
@@ -102,9 +98,9 @@ let currentThumbnailAnchor: HTMLAnchorElement;
 
 function calcPrevIndex(forwards: boolean = true) {
   if (forwards && currentThumbnailIndex >= 0) {
-    return currentThumbnailIndex - 1
+    return currentThumbnailIndex - 1;
   } else if (!forwards && currentThumbnailIndex >= -1) {
-    return currentThumbnailIndex + 1
+    return currentThumbnailIndex + 1;
   } else return -1;
 }
 
@@ -114,28 +110,36 @@ function thumbnailsMove(forwards: boolean = true) {
     : "ytd-rich-item-renderer";
   const thumbnails = document.querySelectorAll(tag);
 
-  forwards ? currentThumbnailIndex++ : (currentThumbnailIndex === -1 ? null : currentThumbnailIndex--);
+  forwards
+    ? currentThumbnailIndex++
+    : currentThumbnailIndex === -1
+    ? null
+    : currentThumbnailIndex--;
 
   const prevIndex = calcPrevIndex(forwards);
 
   if (prevIndex > -1) {
     const prevThumbnail = thumbnails[prevIndex] as HTMLElement;
-    prevThumbnail.style.outline = '';
+    prevThumbnail.style.outline = "";
   }
 
   if (currentThumbnailIndex >= 0) {
-    const currentThumbnail = thumbnails[currentThumbnailIndex] as HTMLElement
-    currentThumbnail.style.outline = 'red solid';
+    const currentThumbnail = thumbnails[currentThumbnailIndex] as HTMLElement;
+    currentThumbnail.style.outline = "red solid";
     currentThumbnail.focus();
 
-    currentThumbnailAnchor = currentThumbnail.querySelector('a') as HTMLAnchorElement;
+    currentThumbnailAnchor = currentThumbnail.querySelector(
+      "a"
+    ) as HTMLAnchorElement;
   }
 }
 
 function thumbGo(ctrl: boolean = false) {
   if (currentThumbnailAnchor) {
     const link = currentThumbnailAnchor.href;
-    ctrl ? window.open(link, '_blank', 'noreferrer') : window.location.href = link;
+    ctrl
+      ? window.open(link, "_blank", "noreferrer")
+      : (window.location.href = link);
   }
 }
 
