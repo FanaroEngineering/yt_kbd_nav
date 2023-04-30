@@ -1,0 +1,27 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  font-size: 1.1rem;
+}
+
+form {
+  width: 300px;
+}
+
+fieldset {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 20px;
+
+  padding: 20px;
+}
+
+button {
+  padding: 10px;
+  margin-top: 10px;
+
+  font-size: 1.3rem;
+}
