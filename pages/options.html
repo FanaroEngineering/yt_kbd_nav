@@ -1,26 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Test Extension Options</title>
+    <title>YT Kbd Nav Settings</title>
+
+    <script src="options.js"></script>
   </head>
   <body>
-    <select id="color">
-      <option value="red">red</option>
-      <option value="green">green</option>
-      <option value="blue">blue</option>
-      <option value="yellow">yellow</option>
-    </select>
+    <header>
+      <h1>YT Kbd Nav Settings</h1>
+    </header>
 
-    <label>
-      <input type="checkbox" id="like" />
-      I like colors.
-    </label>
+    <main>
+      <form id="shortcuts-editor">
+        <fieldset>
+          <legend>Home</legend>
 
-    <div id="status"></div>
-    <button id="save">Save</button>
+          <label for="name">Home</label>
+          <input type="text" name="home" />
+        </fieldset>
 
-    <script>
-      console.log('from options');
-    </script>
+        <fieldset>
+          <legend>Video Player</legend>
+
+          <label for="toggle-player-focus">Toggle Player Focus</label>
+          <input type="text" name="toggle-player-focus" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Video Reactions</legend>
+
+          <label for="like">Like</label>
+          <input type="text" name="like" />
+
+          <label for="dislike">Dislike</label>
+          <input type="text" name="dislike" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Thumbnail Navigation</legend>
+
+          <label for="forwards">Forwards</label>
+          <input type="text" name="forwards" />
+
+          <label for="backwards">Backwards</label>
+          <input type="text" name="backwards" />
+
+          <label for="go-into-thumb-video">Go into Thumbnail Video</label>
+          <input type="text" name="go-into-thumb-video" />
+
+          <label for="go-into-thumb-video-new-tab">Go into Thumbnail Video in New Tab</label>
+          <input type="text" name="go-into-thumb-video-new-tab" />
+        </fieldset>
+
+        <button type="submit">Save</button>
+      </form>
+    </main>
   </body>
 </html>
