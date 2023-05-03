@@ -1,10 +1,14 @@
+// TODO: add a shortcut for clipboarding the current video link (or thumbnail's)
 ///////////////////////////////////////////////////////////////////////////////
 // Entry Point
 
 import { YTShortcutsTable } from "./options";
 
 document.body.addEventListener("keydown", async (e) => {
+  // @ts-ignore Don't know how to make TS recognize `chrome`
   const currentShortcuts: YTShortcutsTable = await chrome.storage.sync.get();
+
+  // TODO: This needs to be shielded against when we're typing on a comment box.
 
   switch (e.key) {
     case currentShortcuts.home:
@@ -42,21 +46,25 @@ function home() {
 ///////////////////////////////////////////////////////////////////////////////
 // Video Player
 
-const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
+function getMoviePlayer() {
+  return  document.querySelector("#movie_player") as HTMLDivElement;
+}
+
+const playerDiv = getMoviePlayer();
 if (playerDiv) {
-  playerDiv.addEventListener("blur", (_) => decorateUnfocusedPlayer());
+  playerDiv.addEventListener("blur", () => decorateUnfocusedPlayer());
   playerDiv.addEventListener("focus", () => decorateFocusedPlayer());
 }
 
 function togglePlayerFocus() {
-  const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
+  const playerDiv = getMoviePlayer();
 
   if (playerDiv)
     document.activeElement === playerDiv ? playerDiv.blur() : playerDiv.focus();
 }
 
 function decorateFocusedPlayer() {
-  const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
+  const playerDiv = getMoviePlayer();
 
   if (playerDiv) {
     playerDiv.style.borderBottom = "#FF8C00 solid";
@@ -65,7 +73,7 @@ function decorateFocusedPlayer() {
 }
 
 function decorateUnfocusedPlayer() {
-  const playerDiv = document.querySelector("#movie_player") as HTMLDivElement;
+  const playerDiv = getMoviePlayer();
 
   if (playerDiv) {
     playerDiv.style.borderBottom = "#483D8B solid";
@@ -105,6 +113,7 @@ function calcPrevIndex(forwards: boolean = true) {
 }
 
 function thumbnailsMove(forwards: boolean = true) {
+  // TODO: Add more tags from the previous project...
   const tag = window.location.pathname.includes("results")
     ? "ytd-video-renderer"
     : "ytd-rich-item-renderer";
@@ -130,7 +139,7 @@ function thumbnailsMove(forwards: boolean = true) {
 
     currentThumbnailAnchor = currentThumbnail.querySelector(
       "a"
-    ) as HTMLAnchorElement;
+    )! as HTMLAnchorElement;
   }
 }
 
