@@ -4,34 +4,54 @@
 
 import { YTShortcutsTable } from "./options";
 
+// TODO: Test this
+function noInputFocus() {
+  const commentBoxQuery = "yt-formatted-string.ytd-commentbox > div";
+
+  let noInputFocus = true;
+
+  [
+    document.querySelector("input#search"),
+    document.querySelector("iron-input > input"),
+    document.querySelectorAll(commentBoxQuery)[0],
+    document.querySelectorAll(commentBoxQuery)[1],
+  ].forEach((el: Element | null) => {
+    if (el == document.activeElement) noInputFocus = false;
+  });
+
+  if (document.activeElement instanceof HTMLInputElement) noInputFocus = false;
+
+  return noInputFocus;
+}
+
 document.body.addEventListener("keydown", async (e) => {
   // @ts-ignore Don't know how to make TS recognize `chrome`
   const currentShortcuts: YTShortcutsTable = await chrome.storage.sync.get();
 
-  // TODO: This needs to be shielded against when we're typing on a comment box.
-
-  switch (e.key) {
-    case currentShortcuts.home:
-      home();
-      break;
-    case currentShortcuts.togglePlayerFocus:
-      togglePlayerFocus();
-      break;
-    case currentShortcuts.like:
-      like();
-      break;
-    case currentShortcuts.dislike:
-      dislike();
-      break;
-    case currentShortcuts.thumbForwards:
-      thumbnailsMove(true);
-      break;
-    case currentShortcuts.thumbBackwards:
-      thumbnailsMove(false);
-      break;
-    case currentShortcuts.thumbGo:
-      e.ctrlKey ? thumbGo(true) : thumbGo(false);
-      break;
+  if (noInputFocus()) {
+    switch (e.key) {
+      case currentShortcuts.home:
+        home();
+        break;
+      case currentShortcuts.togglePlayerFocus:
+        togglePlayerFocus();
+        break;
+      case currentShortcuts.like:
+        like();
+        break;
+      case currentShortcuts.dislike:
+        dislike();
+        break;
+      case currentShortcuts.thumbForwards:
+        thumbnailsMove(true);
+        break;
+      case currentShortcuts.thumbBackwards:
+        thumbnailsMove(false);
+        break;
+      case currentShortcuts.thumbGo:
+        e.ctrlKey ? thumbGo(true) : thumbGo(false);
+        break;
+    }
   }
 });
 
@@ -47,7 +67,7 @@ function home() {
 // Video Player
 
 function getMoviePlayer() {
-  return  document.querySelector("#movie_player") as HTMLDivElement;
+  return document.querySelector("#movie_player") as HTMLDivElement;
 }
 
 const playerDiv = getMoviePlayer();
