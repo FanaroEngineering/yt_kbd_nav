@@ -4,7 +4,6 @@
 
 import { YTShortcutsTable } from "./options";
 
-// TODO: Test this
 function noInputFocus() {
   const commentBoxQuery = "yt-formatted-string.ytd-commentbox > div";
 
@@ -106,14 +105,29 @@ function decorateUnfocusedPlayer() {
 
 function like() {
   const likeButton: HTMLButtonElement = document.querySelector(
-    "#segmented-like-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill"
+    `
+      #segmented-like-button > 
+      ytd-toggle-button-renderer > 
+      yt-button-shape > button > 
+      yt-touch-feedback-shape > 
+      div > 
+      div.yt-spec-touch-feedback-shape__fill
+    `
   )!;
   likeButton!.click();
 }
 
 function dislike() {
   const dislikeButton: HTMLButtonElement = document.querySelector(
-    "#segmented-dislike-button > ytd-toggle-button-renderer > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill"
+    `
+      #segmented-dislike-button > 
+      ytd-toggle-button-renderer > 
+      yt-button-shape > 
+      button > 
+      yt-touch-feedback-shape > 
+      div > 
+      div.yt-spec-touch-feedback-shape__fill
+    `
   )!;
   dislikeButton!.click();
 }
