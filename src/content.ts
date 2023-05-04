@@ -142,10 +142,8 @@ function calcPrevIndex(forwards: boolean = true) {
 
 function thumbnailsMove(forwards: boolean = true) {
   // TODO: Add more tags from the previous project...
-  const tag = window.location.pathname.includes("results")
-    ? "ytd-video-renderer"
-    : "ytd-rich-item-renderer";
-  const thumbnails = document.querySelectorAll(tag);
+  const tags = getTags(window.location.href)
+  const thumbnails = document.querySelectorAll(tags);
 
   forwards
     ? currentThumbnailIndex++
@@ -169,6 +167,46 @@ function thumbnailsMove(forwards: boolean = true) {
       "a"
     )! as HTMLAnchorElement;
   }
+}
+
+type UrlString = string;
+
+const watchTags = `
+  ytd-compact-video-renderer, 
+  ytd-compact-radio-renderer, 
+  ytd-compact-playlist-renderer, 
+  ytd-compact-movie-renderer
+`
+const historyTags = "ytd-thumbnail, ytd-video-renderer"
+const resultsTags = `
+  ytd-video-renderer, 
+  ytd-radio-renderer, 
+  ytd-playlist-renderer, 
+  ytd-channel-renderer
+`
+const homeTags = "ytd-rich-item-renderer"
+const channelTags = `
+  ytd-rich-item-renderer, 
+  ytd-video-renderer, 
+  ytd-grid-video-renderer, 
+  ytd-channel-video-renderer, 
+  ytd-playlist-renderer, 
+  ytd-grid-channel-renderer
+`
+const playlistTags = "ytd-playlist-video-renderer"
+
+function getTags(url: UrlString) {
+  return url.includes('watch')
+      ? watchTags
+      : url.includes('history')
+          ? historyTags
+          : url.includes('playlist')
+              ? playlistTags
+              : url.includes('results')
+                  ? resultsTags
+                  : url.match(new RegExp('/c|/channel|/user|[@]'))
+                      ? channelTags
+                      : homeTags;
 }
 
 function thumbGo(ctrl: boolean = false) {
