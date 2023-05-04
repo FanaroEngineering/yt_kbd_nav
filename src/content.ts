@@ -103,31 +103,25 @@ function decorateUnfocusedPlayer() {
 ///////////////////////////////////////////////////////////////////////////////
 // Like & Dislike
 
+function likeQuery(like: boolean = true) {
+  return `
+    #segmented-${like ? "" : "dis"}like-button > 
+    ytd-toggle-button-renderer > 
+    yt-button-shape > button > 
+    yt-touch-feedback-shape > 
+    div > 
+    div.yt-spec-touch-feedback-shape__fill
+  `;
+}
+
 function like() {
-  const likeButton: HTMLButtonElement = document.querySelector(
-    `
-      #segmented-like-button > 
-      ytd-toggle-button-renderer > 
-      yt-button-shape > button > 
-      yt-touch-feedback-shape > 
-      div > 
-      div.yt-spec-touch-feedback-shape__fill
-    `
-  )!;
+  const likeButton: HTMLButtonElement = document.querySelector(likeQuery())!;
   likeButton!.click();
 }
 
 function dislike() {
   const dislikeButton: HTMLButtonElement = document.querySelector(
-    `
-      #segmented-dislike-button > 
-      ytd-toggle-button-renderer > 
-      yt-button-shape > 
-      button > 
-      yt-touch-feedback-shape > 
-      div > 
-      div.yt-spec-touch-feedback-shape__fill
-    `
+    likeQuery(false)
   )!;
   dislikeButton!.click();
 }
