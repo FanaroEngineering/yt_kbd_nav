@@ -6,6 +6,7 @@ export interface YTShortcutsTable {
   thumbGo: string;
   like: string;
   dislike: string;
+  copyUrl: string;
 }
 
 const defaultShortcuts: YTShortcutsTable = {
@@ -16,9 +17,11 @@ const defaultShortcuts: YTShortcutsTable = {
   thumbForwards: "A",
   thumbBackwards: "S",
   thumbGo: "Enter",
+  copyUrl: "B"
 };
 
 async function initialSetup() {
+  // @ts-ignore Don't know how to make TS recognize `chrome`
   const shortcuts = await chrome.storage.sync.get();
 
   const homeShortcutInput: HTMLInputElement =
@@ -82,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       'input[name="dislike"]'
     )!;
 
+    // @ts-ignore Don't know how to make TS recognize `chrome`
     chrome.storage.sync.set(<YTShortcutsTable>{
       home: homeShortcutInput.value,
       togglePlayerFocus: togglePlayerFocusShortcutInput.value,

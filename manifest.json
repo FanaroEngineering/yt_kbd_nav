@@ -12,7 +12,8 @@
     }
   ],
   "permissions": [
-    "storage"
+    "storage",
+    "clipboardWrite"
   ],
   "options_ui": {
     "page": "/pages/options.html",

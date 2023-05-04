@@ -4,6 +4,20 @@
 
 import { YTShortcutsTable } from "./options";
 
+// TODO: Not working...
+// TODO: Add a shortcut field to `options.html` and `options.ts`
+function shortenLink(url: UrlString) {
+  const splitLink = url.split("watch?v=");
+  const videoId = splitLink[1];
+
+  return `https://youtu.be/${videoId}`;
+}
+
+async function copyVideoUrl() {
+  const url: UrlString = window.location.href;
+  await window.navigator.clipboard.writeText(shortenLink(url));
+}
+
 function noInputFocus() {
   const commentBoxQuery = "yt-formatted-string.ytd-commentbox > div";
 
@@ -49,6 +63,9 @@ document.body.addEventListener("keydown", async (e) => {
         break;
       case currentShortcuts.thumbGo:
         e.ctrlKey ? thumbGo(true) : thumbGo(false);
+        break;
+      case currentShortcuts.copyUrl:
+        await copyVideoUrl();
         break;
     }
   }
@@ -141,8 +158,7 @@ function calcPrevIndex(forwards: boolean = true) {
 }
 
 function thumbnailsMove(forwards: boolean = true) {
-  // TODO: Add more tags from the previous project...
-  const tags = getTags(window.location.href)
+  const tags = getTags(window.location.href);
   const thumbnails = document.querySelectorAll(tags);
 
   forwards
@@ -176,15 +192,15 @@ const watchTags = `
   ytd-compact-radio-renderer, 
   ytd-compact-playlist-renderer, 
   ytd-compact-movie-renderer
-`
-const historyTags = "ytd-thumbnail, ytd-video-renderer"
+`;
+const historyTags = "ytd-thumbnail, ytd-video-renderer";
 const resultsTags = `
   ytd-video-renderer, 
   ytd-radio-renderer, 
   ytd-playlist-renderer, 
   ytd-channel-renderer
-`
-const homeTags = "ytd-rich-item-renderer"
+`;
+const homeTags = "ytd-rich-item-renderer";
 const channelTags = `
   ytd-rich-item-renderer, 
   ytd-video-renderer, 
@@ -192,21 +208,21 @@ const channelTags = `
   ytd-channel-video-renderer, 
   ytd-playlist-renderer, 
   ytd-grid-channel-renderer
-`
-const playlistTags = "ytd-playlist-video-renderer"
+`;
+const playlistTags = "ytd-playlist-video-renderer";
 
 function getTags(url: UrlString) {
-  return url.includes('watch')
-      ? watchTags
-      : url.includes('history')
-          ? historyTags
-          : url.includes('playlist')
-              ? playlistTags
-              : url.includes('results')
-                  ? resultsTags
-                  : url.match(new RegExp('/c|/channel|/user|[@]'))
-                      ? channelTags
-                      : homeTags;
+  return url.includes("watch")
+    ? watchTags
+    : url.includes("history")
+    ? historyTags
+    : url.includes("playlist")
+    ? playlistTags
+    : url.includes("results")
+    ? resultsTags
+    : url.match(new RegExp("/c|/channel|/user|[@]"))
+    ? channelTags
+    : homeTags;
 }
 
 function thumbGo(ctrl: boolean = false) {
