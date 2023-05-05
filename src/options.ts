@@ -1,4 +1,4 @@
-export interface YTShortcutsTable {
+interface YTShortcutsTable {
   home: string;
   togglePlayerFocus: string;
   thumbForwards: string;
@@ -9,7 +9,7 @@ export interface YTShortcutsTable {
   copyUrl: string;
 }
 
-export const defaultShortcuts: YTShortcutsTable = {
+const defaultShortcuts: YTShortcutsTable = {
   home: "q",
   togglePlayerFocus: "\\",
   like: "W",
@@ -22,7 +22,7 @@ export const defaultShortcuts: YTShortcutsTable = {
 
 async function initialSetup() {
   // @ts-ignore Don't know how to make TS recognize `chrome`
-  const shortcuts: YTShortcutsTable = await chrome.storage.sync.get()
+  const shortcuts: YTShortcutsTable = await chrome.storage.sync.get();
 
   const homeShortcutInput: HTMLInputElement =
     document.body.querySelector('input[name="home"]')!;
