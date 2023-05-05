@@ -17,16 +17,21 @@ const defaultShortcuts: YTShortcutsTable = {
   thumbForwards: "A",
   thumbBackwards: "S",
   thumbGo: "Enter",
-  copyUrl: "B"
+  copyUrl: "B",
 };
 
 async function initialSetup() {
   // @ts-ignore Don't know how to make TS recognize `chrome`
-  const shortcuts = await chrome.storage.sync.get();
+  const shortcuts = (await chrome.storage.sync.get()) as YTShortcutsTable;
 
   const homeShortcutInput: HTMLInputElement =
     document.body.querySelector('input[name="home"]')!;
   homeShortcutInput.value = shortcuts.home || defaultShortcuts.home;
+
+  const copyVideoUrlShortcutInput: HTMLInputElement =
+    document.body.querySelector('input[name="copy-video-url"]')!;
+  copyVideoUrlShortcutInput.value =
+    shortcuts.copyUrl || defaultShortcuts.copyUrl;
 
   const togglePlayerFocusShortcutInput: HTMLInputElement =
     document.body.querySelector('input[name="toggle-player-focus"]')!;
@@ -36,11 +41,13 @@ async function initialSetup() {
   const thumbForwardsInput: HTMLInputElement = document.body.querySelector(
     'input[name="forwards"]'
   )!;
-  thumbForwardsInput.value = shortcuts.thumbForwards || defaultShortcuts.thumbForwards;
+  thumbForwardsInput.value =
+    shortcuts.thumbForwards || defaultShortcuts.thumbForwards;
   const thumbBackwardsInput: HTMLInputElement = document.body.querySelector(
     'input[name="backwards"]'
   )!;
-  thumbBackwardsInput.value = shortcuts.thumbBackwards || defaultShortcuts.thumbBackwards;
+  thumbBackwardsInput.value =
+    shortcuts.thumbBackwards || defaultShortcuts.thumbBackwards;
   const thumbGoInput: HTMLInputElement = document.body.querySelector(
     'input[name="go-into-thumb-video"]'
   )!;
@@ -65,6 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const homeShortcutInput: HTMLInputElement =
       document.body.querySelector('input[name="home"]')!;
+
+    const copyVideoUrlShortcutInput: HTMLInputElement =
+      document.body.querySelector('input[name="copy-video-url"]')!;
 
     const togglePlayerFocusShortcutInput: HTMLInputElement =
       document.body.querySelector('input[name="toggle-player-focus"]')!;
@@ -94,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       thumbForwards: thumbForwardsInput.value,
       thumbBackwards: thumbBackwardsInput.value,
       thumbGo: thumbGoInput.value,
+      copyUrl: copyVideoUrlShortcutInput.value,
     });
   };
 });
