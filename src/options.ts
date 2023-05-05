@@ -22,7 +22,7 @@ const defaultShortcuts: YTShortcutsTable = {
 
 async function initialSetup() {
   // @ts-ignore Don't know how to make TS recognize `chrome`
-  const shortcuts = (await chrome.storage.sync.get()) as YTShortcutsTable;
+  const shortcuts: YTShortcutsTable = await chrome.storage.sync.get()
 
   const homeShortcutInput: HTMLInputElement =
     document.body.querySelector('input[name="home"]')!;

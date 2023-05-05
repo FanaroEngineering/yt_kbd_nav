@@ -4,8 +4,6 @@
 
 import { YTShortcutsTable } from "./options";
 
-// TODO: Not working...
-// TODO: Add a shortcut field to `options.html` and `options.ts`
 function shortenLink(url: UrlString) {
   const splitLink = url.split("watch?v=");
   const videoId = splitLink[1];
@@ -38,6 +36,7 @@ function noInputFocus() {
 }
 
 document.body.addEventListener("keydown", async (e) => {
+  // TODO: If the shortcuts hadn't been updated in the options page, this won't get anything.
   // @ts-ignore Don't know how to make TS recognize `chrome`
   const currentShortcuts: YTShortcutsTable = await chrome.storage.sync.get();
 
@@ -65,6 +64,7 @@ document.body.addEventListener("keydown", async (e) => {
         e.ctrlKey ? thumbGo(true) : thumbGo(false);
         break;
       case currentShortcuts.copyUrl:
+        console.log("here2")
         await copyVideoUrl();
         break;
     }
