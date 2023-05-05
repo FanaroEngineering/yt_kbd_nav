@@ -12,6 +12,7 @@ interface YTShortcutsTable {
   copyUrl: string;
 }
 
+// @ts-ignore
 const defaultShortcuts: YTShortcutsTable = {
   home: "q",
   togglePlayerFocus: "\\",
