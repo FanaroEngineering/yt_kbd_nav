@@ -9,7 +9,7 @@ export interface YTShortcutsTable {
   copyUrl: string;
 }
 
-const defaultShortcuts: YTShortcutsTable = {
+export const defaultShortcuts: YTShortcutsTable = {
   home: "q",
   togglePlayerFocus: "\\",
   like: "W",

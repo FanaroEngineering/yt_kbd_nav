@@ -2,19 +2,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Entry Point
 
-import { YTShortcutsTable } from "./options";
-
-function shortenLink(url: UrlString) {
-  const splitLink = url.split("watch?v=");
-  const videoId = splitLink[1];
-
-  return `https://youtu.be/${videoId}`;
-}
-
-async function copyVideoUrl() {
-  const url: UrlString = window.location.href;
-  await window.navigator.clipboard.writeText(shortenLink(url));
-}
+import { YTShortcutsTable, defaultShortcuts } from "./options";
 
 function noInputFocus() {
   const commentBoxQuery = "yt-formatted-string.ytd-commentbox > div";
@@ -36,35 +24,45 @@ function noInputFocus() {
 }
 
 document.body.addEventListener("keydown", async (e) => {
-  // TODO: If the shortcuts hadn't been updated in the options page, this won't get anything.
   // @ts-ignore Don't know how to make TS recognize `chrome`
   const currentShortcuts: YTShortcutsTable = await chrome.storage.sync.get();
 
+  const homeShortcut = currentShortcuts.home || defaultShortcuts.home;
+  const togglePlayerFocusShortcut =
+    currentShortcuts.togglePlayerFocus || defaultShortcuts.togglePlayerFocus;
+  const likeShortcut = currentShortcuts.like || defaultShortcuts.like;
+  const dislikeShortcut = currentShortcuts.dislike || defaultShortcuts.dislike;
+  const thumbForwardsShortcut =
+    currentShortcuts.thumbForwards || defaultShortcuts.thumbForwards;
+  const thumbBackwardsShortcut =
+    currentShortcuts.thumbBackwards || defaultShortcuts.thumbBackwards;
+  const thumbGoShortcut = currentShortcuts.thumbGo || defaultShortcuts.thumbGo;
+  const copyUrlShortcut = currentShortcuts.copyUrl || defaultShortcuts.copyUrl;
+
   if (noInputFocus()) {
     switch (e.key) {
-      case currentShortcuts.home:
+      case homeShortcut:
         home();
         break;
-      case currentShortcuts.togglePlayerFocus:
+      case togglePlayerFocusShortcut:
         togglePlayerFocus();
         break;
-      case currentShortcuts.like:
+      case likeShortcut:
         like();
         break;
-      case currentShortcuts.dislike:
+      case dislikeShortcut:
         dislike();
         break;
-      case currentShortcuts.thumbForwards:
+      case thumbForwardsShortcut:
         thumbnailsMove(true);
         break;
-      case currentShortcuts.thumbBackwards:
+      case thumbBackwardsShortcut:
         thumbnailsMove(false);
         break;
-      case currentShortcuts.thumbGo:
+      case thumbGoShortcut:
         e.ctrlKey ? thumbGo(true) : thumbGo(false);
         break;
-      case currentShortcuts.copyUrl:
-        console.log("here2")
+      case copyUrlShortcut:
         await copyVideoUrl();
         break;
     }
@@ -232,6 +230,21 @@ function thumbGo(ctrl: boolean = false) {
       ? window.open(link, "_blank", "noreferrer")
       : (window.location.href = link);
   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Copy Video URL
+
+function shortenLink(url: UrlString) {
+  const splitLink = url.split("watch?v=");
+  const videoId = splitLink[1];
+
+  return `https://youtu.be/${videoId}`;
+}
+
+async function copyVideoUrl() {
+  const url: UrlString = window.location.href;
+  await window.navigator.clipboard.writeText(shortenLink(url));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
