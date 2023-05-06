@@ -1,3 +1,7 @@
+// TODO: Links open in new tabs should not focus the new tab
+// TODO: Also query for like buttons on the Shorts viewer
+// TODO: Cycling through the thumbnails doesn't focus
+// TODO: When clicking on a thumbnail, check that there are no other active elements
 ///////////////////////////////////////////////////////////////////////////////
 // Entry Point
 
