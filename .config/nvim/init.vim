@@ -50,7 +50,7 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'ycm-core/YouCompleteMe'
+" Plug 'ycm-core/YouCompleteMe'
 Plug 'uiiaoo/java-syntax.vim'
 
 call plug#end()
@@ -129,31 +129,31 @@ nnoremap <leader>d "_d
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 
 " Save all files
-nnoremap <C-s> :wa<CR>
+nnoremap <D-s> :wa<CR>
 
 " Scrolling also centers
-nnoremap <C-d> <C-d>zz
-nnoremap <C-u> <C-u>zz
+nnoremap <D-d> <C-d>zz
+nnoremap <D-u> <C-u>zz
 
 " FZF
-nnoremap <C-p> :GFiles<CR>
-nnoremap <C-f> :Rg<CR>
-nnoremap <C-e> :Ranger<CR>
+nnoremap <D-p> :GFiles<CR>
+nnoremap <D-f> :Rg<CR>
+nnoremap <D-e> :Ranger<CR>
 
 " Formatting
 nnoremap <A-S-f> :Prettier<CR>
 
 " Going through editors
-nmap <C-k> <C-w>k " Above
-nmap <C-j> <C-w>j " Below
-nmap <C-h> <C-w>h " Left
-nmap <C-l> <C-w>l " Right
+nmap <D-k> <D-w>k " Above
+nmap <D-j> <D-w>j " Below
+nmap <D-h> <D-w>h " Left
+nmap <D-l> <D-w>l " Right
 
 " Creating Splits
-nmap <A-S-k> :aboveleft split<CR>  " Above
-nmap <A-S-j> :split<CR>            " Below
-nmap <A-S-h> :vsplit<CR>           " Left
-nmap <A-S-l> :aboveleft vsplit<CR> " Right
+nmap <C-S-k> :aboveleft split<CR>  " Above
+nmap <C-S-j> :split<CR>            " Below
+nmap <C-S-h> :vsplit<CR>           " Left
+nmap <C-S-l> :aboveleft vsplit<CR> " Right
 
 " NERDTree
 nmap <leader>n :NERDTree<CR>
@@ -165,10 +165,10 @@ nmap <leader>n :NERDTree<CR>
 set pumheight=20
 
 " Tab selects next suggestion if suggestions are visible
-inoremap <expr> <TAB> pumvisible() ? "<C-n>" : "<TAB>"
+inoremap <expr> <TAB> pumvisible() ? "<D-n>" : "<TAB>"
 
-nnoremap <C-k><C-h> :LspHover<CR>
-nnoremap <C-k><C-d> :LspDefinition<CR>
-nnoremap <C-k><C-e> :LspNextError<CR>
-nnoremap <C-k><C-r> :LspRename<CR>
+nnoremap <D-k><D-h> :LspHover<CR>
+nnoremap <D-k><D-d> :LspDefinition<CR>
+nnoremap <D-k><D-e> :LspNextError<CR>
+nnoremap <D-k><D-r> :LspRename<CR>
 "------------------------------------------------------------------------------
