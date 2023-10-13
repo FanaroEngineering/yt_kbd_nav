@@ -1,7 +1,7 @@
 #-----------------------------------------------------------
 # Restart Yabai
 
-yabai --restart-service
+# yabai --restart-service
 
 #-----------------------------------------------------------
 # Default Layout (bsp, stack or float)
