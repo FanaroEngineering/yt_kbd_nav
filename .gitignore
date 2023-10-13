@@ -36,6 +36,15 @@
 !.config/Code/User/keybindings.json
 
 #-------------------------------------------------------------------------------
+# Window Tiling
+
+!.config/yabai/
+!.config/yabai/yabairc
+
+!.config/skhd/
+!.config/skhd/skhdrc
+
+#-------------------------------------------------------------------------------
 # Others
 
 !.config/mpv/
