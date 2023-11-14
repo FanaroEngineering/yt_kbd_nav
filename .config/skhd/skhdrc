@@ -1,5 +1,12 @@
 ##################################################################################
 
+# Layout
+
+shift + alt - b : yabai -m config layout bsp
+shift + alt - n : yabai -m config layout float
+
+##################################################################################
+
 # Focus
 
 alt - h : yabai -m window --focus west
