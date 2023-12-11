@@ -1,5 +1,6 @@
 import { YTShortcutsTable } from "./utils"
 
+// TODO: Not working when coming from pages other than the video itself.
 ///////////////////////////////////////////////////////////////////////////////
 // 0. Entry Point
 
@@ -93,14 +94,20 @@ function getMoviePlayer() {
   return document.querySelector("#movie_player") as HTMLDivElement
 }
 
-const playerDiv = getMoviePlayer()
-if (playerDiv) {
-  playerDiv.addEventListener("blur", () => decorateUnfocusedPlayer())
-  playerDiv.addEventListener("focus", () => decorateFocusedPlayer())
+function setupFocusDecoration() {
+  const playerDiv = getMoviePlayer()
+  if (playerDiv) {
+    playerDiv.onblur = decorateUnfocusedPlayer
+    playerDiv.onfocus = decorateFocusedPlayer
+  }
 }
+
+window.onload = setupFocusDecoration
 
 function togglePlayerFocus() {
   const playerDiv = getMoviePlayer()
+
+  setupFocusDecoration()
 
   if (playerDiv)
     document.activeElement === playerDiv ? playerDiv.blur() : playerDiv.focus()
