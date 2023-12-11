@@ -1,6 +1,5 @@
 import { YTShortcutsTable } from "./utils"
 
-// TODO: Also query for like buttons on the Shorts viewer
 // TODO: Cycling through the thumbnails doesn't focus
 // TODO: When clicking on a thumbnail, check that there are no other active elements
 ///////////////////////////////////////////////////////////////////////////////
@@ -21,20 +20,17 @@ const defaultShortcuts: YTShortcutsTable = {
 function noInputFocus() {
   const commentBoxQuery = "yt-formatted-string.ytd-commentbox > div"
 
-  let noInputFocus = true
-
-  ;[
+  const inputBoxes = [
     document.querySelector("input#search"),
     document.querySelector("iron-input > input"),
     document.querySelectorAll(commentBoxQuery)[0],
     document.querySelectorAll(commentBoxQuery)[1],
-  ].forEach((el: Element | null) => {
-    if (el == document.activeElement) noInputFocus = false
-  })
+  ]
 
-  if (document.activeElement instanceof HTMLInputElement) noInputFocus = false
-
-  return noInputFocus
+  return (
+    inputBoxes.every((el) => el !== document.activeElement) &&
+    !(document.activeElement instanceof HTMLInputElement)
+  )
 }
 
 document.body.addEventListener("keydown", async (e) => {
