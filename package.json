@@ -2,12 +2,21 @@
   "name": "yt_kbd_nav",
   "version": "0.0.1",
   "description": "YouTube Keyboard Navigation",
-  "author": "Philippe Fanaro",
   "license": "ISC",
+  "author": "Philippe Fanaro",
+  "contributors": [
+    {
+      "name": "Philippe Fanaro",
+      "email": "philippefanaro@gmail.com"
+    }
+  ],
+  "keywords": [
+    "YouTube",
+    "Keyboard"
+  ],
   "main": "content.js",
   "type": "module",
   "scripts": {
-    "dev": "vite --config vite.dev.config.ts",
     "build": "vite build --config vite.build.config.ts && cp manifest.json dist/manifest.json && cp package.json dist/ && cp -r pages/ dist/"
   },
   "devDependencies": {

@@ -6,9 +6,15 @@
   "description": "YouTube keyboard navigation to the max.",
   "content_scripts": [
     {
-      "matches": ["*://*.youtube.com/*"],
-      "exclude_matches": ["*://*.studio.youtube.com/*"],
-      "js": ["content.js"]
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "exclude_matches": [
+        "*://*.studio.youtube.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
     }
   ],
   "permissions": [
