@@ -86,22 +86,6 @@ document.body.addEventListener("keydown", async (e) => {
   }
 })
 
-function displayTime() {
-  const currentTime =
-    document.body.querySelector(".ytp-time-current")?.innerHTML
-  const totalTime = document.body.querySelector(".ytp-time-duration")?.innerHTML
-
-  const videoContainer = document.body.querySelector(".html5-video-container")
-
-  const timeDisplay = document.createElement("p")
-  timeDisplay.innerText = `${currentTime} / ${totalTime}`
-  timeDisplay.id = "time-display"
-  timeDisplay.style.zIndex = "1000"
-  timeDisplay.style.position = "absolute"
-
-  videoContainer?.appendChild(timeDisplay)
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // 1. Home Shortcut
 
@@ -127,6 +111,7 @@ function setupFocusDecoration() {
 
 window.onload = () => {
   setupFocusDecoration()
+  setupTimeDisplay()
 
   const playerDiv = getMoviePlayer()
   if (playerDiv) {
@@ -158,6 +143,60 @@ function decorateUnfocusedPlayer() {
   if (playerDiv) {
     playerDiv.style.borderBottom = "#483D8B solid"
     playerDiv.style.borderWidth = "0.5px"
+  }
+}
+
+function displayTime() {
+  const timeDisplay = document.body.querySelector(
+    "#time-display"
+  )! as HTMLParagraphElement
+
+  timeDisplay.style.visibility =
+    timeDisplay.style.visibility === "visible" ? "hidden" : "visible"
+}
+
+// TODO: Add shortcut to table in README
+// TODO: Add shortcut to options page
+// TODO: Add black on white outline to text
+
+function formatSecondsToHHMMSS(secs: number) {
+  const d = new Date(0)
+  d.setSeconds(secs)
+  return d
+    .toISOString()
+    .substring(11, 19)
+    .replace(/^(00:)/, "")
+}
+
+function setupTimeDisplay() {
+  const video = document.body.querySelector("video") as HTMLVideoElement
+  const totalDuration = video.duration
+
+  const videoContainer = document.body.querySelector(".html5-video-container")
+
+  const timeDisplay = document.createElement("p")
+  timeDisplay.innerText = `00:00 / ${formatSecondsToHHMMSS(totalDuration)}`
+  timeDisplay.id = "time-display"
+  timeDisplay.style.fontSize = "30px"
+  timeDisplay.style.zIndex = "1000"
+  timeDisplay.style.position = "absolute"
+  timeDisplay.style.top = "15px"
+  timeDisplay.style.right = "15px"
+  timeDisplay.style.visibility = "hidden"
+  timeDisplay.style.fontWeight = "bold"
+  timeDisplay.style.setProperty("-webkit-text-stroke", "1px black")
+
+  if (videoContainer) videoContainer.appendChild(timeDisplay)
+
+  if (video) {
+    video.ontimeupdate = (e) => {
+      const v = e.target as HTMLVideoElement
+
+      const totalDurationFormatted = formatSecondsToHHMMSS(v.duration)
+      const currentTimeFormatted = formatSecondsToHHMMSS(v.currentTime)
+
+      timeDisplay.innerText = `${currentTimeFormatted} / ${totalDurationFormatted}`
+    }
   }
 }
 
