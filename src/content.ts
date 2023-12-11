@@ -4,6 +4,7 @@ import { YTShortcutsTable } from "./utils"
 ///////////////////////////////////////////////////////////////////////////////
 // 0. Entry Point
 
+// Don't know if it's possible to export this without modules.
 // @ts-ignore
 const defaultShortcuts: YTShortcutsTable = {
   home: "q",
@@ -102,7 +103,14 @@ function setupFocusDecoration() {
   }
 }
 
-window.onload = setupFocusDecoration
+window.onload = () => {
+  setupFocusDecoration()
+
+  const playerDiv = getMoviePlayer()
+  if (playerDiv) {
+    playerDiv.focus()
+  }
+}
 
 function togglePlayerFocus() {
   const playerDiv = getMoviePlayer()

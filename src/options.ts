@@ -1,5 +1,6 @@
 import { YTShortcutsTable } from "./utils"
 
+// Don't know if it's possible to export this without modules.
 // @ts-ignore
 const defaultShortcuts: YTShortcutsTable = {
   home: "q",
