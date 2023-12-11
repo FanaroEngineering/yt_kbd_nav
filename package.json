@@ -21,7 +21,6 @@
     "build": "bash ./build.sh"
   },
   "devDependencies": {
-    "path": "^0.12.7",
     "typescript": "^5.0.4",
     "vite": "^4.3.0",
     "vite-plugin-dts": "^2.3.0"
