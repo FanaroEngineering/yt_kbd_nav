@@ -1,13 +1,4 @@
-interface YTShortcutsTable {
-  home: string
-  togglePlayerFocus: string
-  thumbForwards: string
-  thumbBackwards: string
-  thumbGo: string
-  like: string
-  dislike: string
-  copyUrl: string
-}
+import { YTShortcutsTable } from "./utils"
 
 // @ts-ignore
 const defaultShortcuts: YTShortcutsTable = {
@@ -22,7 +13,8 @@ const defaultShortcuts: YTShortcutsTable = {
 }
 
 async function initialSetup() {
-  // @ts-ignore Don't know how to make TS recognize `chrome`
+  // Don't know how to make TS recognize `chrome`...
+  // @ts-ignore
   const shortcuts: YTShortcutsTable = await chrome.storage.sync.get()
 
   const homeShortcutInput: HTMLInputElement =

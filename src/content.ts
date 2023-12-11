@@ -1,20 +1,11 @@
+import { YTShortcutsTable } from "./utils"
+
 // TODO: Links open in new tabs should not focus the new tab
 // TODO: Also query for like buttons on the Shorts viewer
 // TODO: Cycling through the thumbnails doesn't focus
 // TODO: When clicking on a thumbnail, check that there are no other active elements
 ///////////////////////////////////////////////////////////////////////////////
-// Entry Point
-
-interface YTShortcutsTable {
-  home: string
-  togglePlayerFocus: string
-  thumbForwards: string
-  thumbBackwards: string
-  thumbGo: string
-  like: string
-  dislike: string
-  copyUrl: string
-}
+// 0. Entry Point
 
 // @ts-ignore
 const defaultShortcuts: YTShortcutsTable = {
@@ -48,7 +39,8 @@ function noInputFocus() {
 }
 
 document.body.addEventListener("keydown", async (e) => {
-  // @ts-ignore Don't know how to make TS recognize `chrome`
+  // Don't know how to make TS recognize `chrome`...
+  // @ts-ignore
   const currentShortcuts: YTShortcutsTable = await chrome.storage.sync.get()
 
   const homeShortcut = currentShortcuts.home || defaultShortcuts.home
@@ -94,7 +86,7 @@ document.body.addEventListener("keydown", async (e) => {
 })
 
 ///////////////////////////////////////////////////////////////////////////////
-// Home Shortcut
+// 1. Home Shortcut
 
 function home() {
   const logoIcon = document.querySelector("yt-icon") as HTMLButtonElement
@@ -102,7 +94,7 @@ function home() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Video Player
+// 2. Video Player
 
 function getMoviePlayer() {
   return document.querySelector("#movie_player") as HTMLDivElement
@@ -140,7 +132,7 @@ function decorateUnfocusedPlayer() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Like & Dislike
+// 3. Like & Dislike
 
 function likeQuery(like: boolean = true) {
   return `
@@ -171,7 +163,7 @@ function dislike() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Thumbnails
+// 4. Thumbnails
 
 let currentThumbnailIndex = -1
 let currentThumbnailAnchor: HTMLAnchorElement
@@ -262,7 +254,7 @@ function thumbGo(ctrl: boolean = false) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Copy Video URL
+// 5. Copy Video URL
 
 function shortenLink(url: UrlString) {
   const splitLink = url.split("watch?v=")
