@@ -76,7 +76,7 @@ document.body.addEventListener("keydown", async (e) => {
         thumbnailsMove(false)
         break
       case thumbGoShortcut:
-        e.ctrlKey ? thumbGo(true) : thumbGo(false)
+        e.ctrlKey || e.metaKey ? thumbGo(true) : thumbGo(false)
         break
       case copyUrlShortcut:
         await copyVideoUrl()
@@ -247,9 +247,7 @@ function getTags(url: UrlString) {
 function thumbGo(ctrl: boolean = false) {
   if (currentThumbnailAnchor) {
     const link = currentThumbnailAnchor.href
-    ctrl
-      ? window.open(link, "_blank", "noreferrer")
-      : (window.location.href = link)
+    ctrl ? window.open(link, "_blank") : (window.location.href = link)
   }
 }
 
