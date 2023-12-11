@@ -15,6 +15,8 @@ const defaultShortcuts: YTShortcutsTable = {
   thumbBackwards: "S",
   thumbGo: "Enter",
   copyUrl: "B",
+  // TODO: Add this to the table of shortcuts
+  showTime: ";",
 }
 
 function noInputFocus() {
@@ -49,6 +51,7 @@ document.body.addEventListener("keydown", async (e) => {
     currentShortcuts.thumbBackwards || defaultShortcuts.thumbBackwards
   const thumbGoShortcut = currentShortcuts.thumbGo || defaultShortcuts.thumbGo
   const copyUrlShortcut = currentShortcuts.copyUrl || defaultShortcuts.copyUrl
+  const showTime = currentShortcuts.showTime || defaultShortcuts.showTime
 
   if (noInputFocus()) {
     switch (e.key) {
@@ -76,9 +79,28 @@ document.body.addEventListener("keydown", async (e) => {
       case copyUrlShortcut:
         await copyVideoUrl()
         break
+      case showTime:
+        displayTime()
+        break
     }
   }
 })
+
+function displayTime() {
+  const currentTime =
+    document.body.querySelector(".ytp-time-current")?.innerHTML
+  const totalTime = document.body.querySelector(".ytp-time-duration")?.innerHTML
+
+  const videoContainer = document.body.querySelector(".html5-video-container")
+
+  const timeDisplay = document.createElement("p")
+  timeDisplay.innerText = `${currentTime} / ${totalTime}`
+  timeDisplay.id = "time-display"
+  timeDisplay.style.zIndex = "1000"
+  timeDisplay.style.position = "absolute"
+
+  videoContainer?.appendChild(timeDisplay)
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 1. Home Shortcut
