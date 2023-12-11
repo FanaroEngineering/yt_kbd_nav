@@ -1,6 +1,5 @@
 import { YTShortcutsTable } from "./utils"
 
-// TODO: Links open in new tabs should not focus the new tab
 // TODO: Also query for like buttons on the Shorts viewer
 // TODO: Cycling through the thumbnails doesn't focus
 // TODO: When clicking on a thumbnail, check that there are no other active elements
@@ -134,30 +133,44 @@ function decorateUnfocusedPlayer() {
 ///////////////////////////////////////////////////////////////////////////////
 // 3. Like & Dislike
 
-function likeQuery(like: boolean = true) {
-  return `
-    #top-level-buttons-computed > 
-    segmented-like-dislike-button-view-model > 
-    yt-smartimation > 
-    div > 
-    div > 
-    ${like ? "" : "dis"}like-button-view-model > 
-    toggle-button-view-model > 
-    button > 
-    yt-touch-feedback-shape > 
-    div > 
-    div.yt-spec-touch-feedback-shape__fill
-  `
+function likeQuery(isShorts: boolean = false, like: boolean = true) {
+  return isShorts
+    ? `
+      #${like ? "" : "dis"}like-button > 
+      yt-button-shape > 
+      label > 
+      button > 
+      yt-touch-feedback-shape > 
+      div > 
+      div.yt-spec-touch-feedback-shape__fill
+    `
+    : `
+      #top-level-buttons-computed > 
+      segmented-like-dislike-button-view-model > 
+      yt-smartimation > 
+      div > 
+      div > 
+      ${like ? "" : "dis"}like-button-view-model > 
+      toggle-button-view-model > 
+      button > 
+      yt-touch-feedback-shape > 
+      div > 
+      div.yt-spec-touch-feedback-shape__fill
+    `
 }
 
 function like() {
-  const likeButton: HTMLButtonElement = document.querySelector(likeQuery())!
+  const isShorts = window.location.pathname.includes("shorts")
+  const likeButton: HTMLButtonElement = document.querySelector(
+    likeQuery(isShorts)
+  )!
   likeButton!.click()
 }
 
 function dislike() {
+  const isShorts = window.location.pathname.includes("shorts")
   const dislikeButton: HTMLButtonElement = document.querySelector(
-    likeQuery(false)
+    likeQuery(isShorts, false)
   )!
   dislikeButton!.click()
 }
