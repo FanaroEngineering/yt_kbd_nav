@@ -6,6 +6,13 @@ TODO: Add table of shortcuts
 
 ## Table of Default Shortcuts
 
-| Action | Shortcut     |
-| ------ | ------------ |
-| Home   | <kbd>q</kbd> |
+| Action                       | Shortcut         |
+| ---------------------------- | ---------------- |
+| Home                         | <kbd>q</kbd>     |
+| Toggle Player Focus          | <kbd>\</kbd>     |
+| Like                         | <kbd>W</kbd>     |
+| Dislike                      | <kbd>E</kbd>     |
+| Thumbnail Navigate Forwards  | <kbd>A</kbd>     |
+| Thumbnail Navigate Backwards | <kbd>S</kbd>     |
+| Thumbnail Navigate To        | <kbd>Enter</kbd> |
+| Copy Video URL               | <kbd>B</kbd>     |
