@@ -1,7 +1,5 @@
 import { YTShortcutsTable } from "./utils"
 
-// TODO: Cycling through the thumbnails doesn't focus
-// TODO: When clicking on a thumbnail, check that there are no other active elements
 ///////////////////////////////////////////////////////////////////////////////
 // 0. Entry Point
 
@@ -205,11 +203,11 @@ function thumbnailsMove(forwards: boolean = true) {
   if (currentThumbnailIndex >= 0) {
     const currentThumbnail = thumbnails[currentThumbnailIndex] as HTMLElement
     currentThumbnail.style.outline = "red solid"
-    currentThumbnail.focus()
 
     currentThumbnailAnchor = currentThumbnail.querySelector(
       "a"
     )! as HTMLAnchorElement
+    currentThumbnailAnchor.focus()
   }
 }
 
