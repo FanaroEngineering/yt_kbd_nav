@@ -9,7 +9,7 @@ TODO: Add table of shortcuts
 | Action                       | Shortcut         |
 | ---------------------------- | ---------------- |
 | Home                         | <kbd>q</kbd>     |
-| Toggle Player Focus          | <kbd>\</kbd>     |
+| Toggle Player Focus          | <kbd>\\</kbd>    |
 | Like                         | <kbd>W</kbd>     |
 | Dislike                      | <kbd>E</kbd>     |
 | Thumbnail Navigate Forwards  | <kbd>A</kbd>     |
