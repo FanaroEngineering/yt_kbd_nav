@@ -15,8 +15,7 @@ const defaultShortcuts: YTShortcutsTable = {
   thumbBackwards: "S",
   thumbGo: "Enter",
   copyUrl: "B",
-  // TODO: Add this to the table of shortcuts
-  showTime: ";",
+  displayTime: ";",
 }
 
 function noInputFocus() {
@@ -51,7 +50,7 @@ document.body.addEventListener("keydown", async (e) => {
     currentShortcuts.thumbBackwards || defaultShortcuts.thumbBackwards
   const thumbGoShortcut = currentShortcuts.thumbGo || defaultShortcuts.thumbGo
   const copyUrlShortcut = currentShortcuts.copyUrl || defaultShortcuts.copyUrl
-  const showTime = currentShortcuts.showTime || defaultShortcuts.showTime
+  const showTime = currentShortcuts.displayTime || defaultShortcuts.displayTime
 
   if (noInputFocus()) {
     switch (e.key) {
@@ -155,10 +154,6 @@ function displayTime() {
     timeDisplay.style.visibility === "visible" ? "hidden" : "visible"
 }
 
-// TODO: Add shortcut to table in README
-// TODO: Add shortcut to options page
-// TODO: Add black on white outline to text
-
 function formatSecondsToHHMMSS(secs: number) {
   const d = new Date(0)
   d.setSeconds(secs)
@@ -170,12 +165,12 @@ function formatSecondsToHHMMSS(secs: number) {
 
 function setupTimeDisplay() {
   const video = document.body.querySelector("video") as HTMLVideoElement
-  const totalDuration = video.duration
 
-  const videoContainer = document.body.querySelector(".html5-video-container")
+  const totalDurationFormatted = formatSecondsToHHMMSS(video.duration)
+  const currentTimeFormatted = formatSecondsToHHMMSS(video.currentTime)
 
   const timeDisplay = document.createElement("p")
-  timeDisplay.innerText = `00:00 / ${formatSecondsToHHMMSS(totalDuration)}`
+  timeDisplay.innerText = `${currentTimeFormatted} / ${totalDurationFormatted}`
   timeDisplay.id = "time-display"
   timeDisplay.style.fontSize = "30px"
   timeDisplay.style.zIndex = "1000"
@@ -186,14 +181,15 @@ function setupTimeDisplay() {
   timeDisplay.style.fontWeight = "bold"
   timeDisplay.style.setProperty("-webkit-text-stroke", "1px black")
 
+  const videoContainer = document.body.querySelector(".html5-video-container")
   if (videoContainer) videoContainer.appendChild(timeDisplay)
 
   if (video) {
     video.ontimeupdate = (e) => {
-      const v = e.target as HTMLVideoElement
+      const video = e.target as HTMLVideoElement
 
-      const totalDurationFormatted = formatSecondsToHHMMSS(v.duration)
-      const currentTimeFormatted = formatSecondsToHHMMSS(v.currentTime)
+      const totalDurationFormatted = formatSecondsToHHMMSS(video.duration)
+      const currentTimeFormatted = formatSecondsToHHMMSS(video.currentTime)
 
       timeDisplay.innerText = `${currentTimeFormatted} / ${totalDurationFormatted}`
     }

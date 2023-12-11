@@ -7,5 +7,5 @@ export interface YTShortcutsTable {
   like: string
   dislike: string
   copyUrl: string
-  showTime: string
+  displayTime: string
 }

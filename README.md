@@ -4,10 +4,11 @@
 
 ## Table of Default Shortcuts
 
-| Action                       | Shortcut         |
+| Action                       | Default Shortcut |
 | ---------------------------- | ---------------- |
 | Home                         | <kbd>q</kbd>     |
 | Toggle Player Focus          | <kbd>\\</kbd>    |
+| Display Video Time           | <kbd>;</kbd>     |
 | Like                         | <kbd>W</kbd>     |
 | Dislike                      | <kbd>E</kbd>     |
 | Thumbnail Navigate Forwards  | <kbd>A</kbd>     |

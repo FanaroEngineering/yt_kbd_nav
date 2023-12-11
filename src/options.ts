@@ -11,12 +11,18 @@ const defaultShortcuts: YTShortcutsTable = {
   thumbBackwards: "S",
   thumbGo: "Enter",
   copyUrl: "B",
+  displayTime: ";",
 }
 
 async function initialSetup() {
   // Don't know how to make TS recognize `chrome`...
   // @ts-ignore
   const shortcuts: YTShortcutsTable = await chrome.storage.sync.get()
+
+  const displayTimeShortcutInput: HTMLInputElement =
+    document.body.querySelector('input[name="display-time"]')!
+  displayTimeShortcutInput.value =
+    shortcuts.displayTime || defaultShortcuts.displayTime
 
   const homeShortcutInput: HTMLInputElement =
     document.body.querySelector('input[name="home"]')!
@@ -70,6 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const copyVideoUrlShortcutInput: HTMLInputElement =
       document.body.querySelector('input[name="copy-video-url"]')!
 
+    const displayTimeShortcutInput: HTMLInputElement =
+      document.body.querySelector('input[name="display-time"]')!
+
     const togglePlayerFocusShortcutInput: HTMLInputElement =
       document.body.querySelector('input[name="toggle-player-focus"]')!
 
@@ -99,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       thumbBackwards: thumbBackwardsInput.value,
       thumbGo: thumbGoInput.value,
       copyUrl: copyVideoUrlShortcutInput.value,
+      displayTime: displayTimeShortcutInput.value,
     })
   }
 })
