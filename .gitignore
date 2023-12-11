@@ -2,3 +2,5 @@ dist/
 bundle/
 
 node_modules/
+
+*.zip

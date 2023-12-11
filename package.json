@@ -18,7 +18,8 @@
   "main": "content.js",
   "type": "module",
   "scripts": {
-    "build": "bash ./build.sh"
+    "build": "bash ./build.sh",
+    "release": "bash ./release.sh"
   },
   "devDependencies": {
     "typescript": "^5.0.4",
