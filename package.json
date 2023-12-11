@@ -12,12 +12,13 @@
   ],
   "keywords": [
     "YouTube",
-    "Keyboard"
+    "Keyboard",
+    "UI Keyboard Navigation"
   ],
   "main": "content.js",
   "type": "module",
   "scripts": {
-    "build": "vite build --config vite.build.config.ts && cp manifest.json dist/manifest.json && cp package.json dist/ && cp -r pages/ dist/"
+    "build": "bash ./build.sh"
   },
   "devDependencies": {
     "path": "^0.12.7",
