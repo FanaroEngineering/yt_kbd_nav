@@ -2,6 +2,12 @@
 
 > Simplified version of my previous [YouTube Kbd Nav browser extension](https://github.com/FanaroEngineering/youtube_kbd_nav), this time written in TypeScript instead of Dart.
 
+## How do I install this?
+
+1. Enable _Developer Mode_ in your Chrome-based browser exntension settings.
+2. Unzip the [latest release](https://github.com/FanaroEngineering/yt_kbd_nav/releases).
+3. Use the _Load unpacked_ button to install the extension.
+
 ## Table of Default Shortcuts
 
 | Action                       | Default Shortcut |
