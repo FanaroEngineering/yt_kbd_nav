@@ -1,6 +1,7 @@
 import { YTShortcutsTable } from "./utils"
 
 // TODO: Not working when coming from pages other than the video itself.
+//       That's something related to the context being invalidated, even though I'm on the same website...
 ///////////////////////////////////////////////////////////////////////////////
 // 0. Entry Point
 
