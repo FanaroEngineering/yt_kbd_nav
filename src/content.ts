@@ -96,16 +96,10 @@ function home() {
 ///////////////////////////////////////////////////////////////////////////////
 // 2. Video Player
 
+// 2.1. Setup
+
 function getMoviePlayer() {
   return document.querySelector("#movie_player") as HTMLDivElement
-}
-
-function setupFocusDecoration() {
-  const playerDiv = getMoviePlayer()
-  if (playerDiv) {
-    playerDiv.onblur = decorateUnfocusedPlayer
-    playerDiv.onfocus = decorateFocusedPlayer
-  }
 }
 
 window.onload = () => {
@@ -115,6 +109,16 @@ window.onload = () => {
   const playerDiv = getMoviePlayer()
   if (playerDiv) {
     playerDiv.focus()
+  }
+}
+
+// 2.2. Focus Decoration
+
+function setupFocusDecoration() {
+  const playerDiv = getMoviePlayer()
+  if (playerDiv) {
+    playerDiv.onblur = decorateUnfocusedPlayer
+    playerDiv.onfocus = decorateFocusedPlayer
   }
 }
 
@@ -145,6 +149,8 @@ function decorateUnfocusedPlayer() {
   }
 }
 
+// 2.3. Time Display
+
 function displayTime() {
   const timeDisplay = document.body.querySelector(
     "#time-display"
@@ -163,8 +169,8 @@ function formatSecondsToHHMMSS(secs: number) {
     .replace(/^(00:)/, "")
 }
 
-function setupTimeDisplay() {
-  const video = document.body.querySelector("video") as HTMLVideoElement
+function createTimeDisplay() {
+  const video = document.body.querySelector("video")!
 
   const totalDurationFormatted = formatSecondsToHHMMSS(video.duration)
   const currentTimeFormatted = formatSecondsToHHMMSS(video.currentTime)
@@ -184,12 +190,23 @@ function setupTimeDisplay() {
   const videoContainer = document.body.querySelector(".html5-video-container")
   if (videoContainer) videoContainer.appendChild(timeDisplay)
 
+  return timeDisplay
+}
+
+function setupTimeDisplay() {
+  const video = document.body.querySelector("video")!
+
   if (video) {
     video.ontimeupdate = (e) => {
       const video = e.target as HTMLVideoElement
 
       const totalDurationFormatted = formatSecondsToHHMMSS(video.duration)
       const currentTimeFormatted = formatSecondsToHHMMSS(video.currentTime)
+
+      const timeDisplay =
+        (document.body.querySelector(
+          "#time-display"
+        )! as HTMLParagraphElement) ?? createTimeDisplay()
 
       timeDisplay.innerText = `${currentTimeFormatted} / ${totalDurationFormatted}`
     }
