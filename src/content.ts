@@ -34,7 +34,7 @@ function noInputFocus() {
   )
 }
 
-document.body.addEventListener("keydown", async (e) => {
+document.body.onkeydown = async (e) => {
   // Don't know how to make TS recognize `chrome`...
   // @ts-ignore
   const currentShortcuts: YTShortcutsTable = await chrome.storage.sync.get()
@@ -83,7 +83,7 @@ document.body.addEventListener("keydown", async (e) => {
         break
     }
   }
-})
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 1. Home Shortcut
@@ -194,7 +194,7 @@ function createTimeDisplay() {
 }
 
 function setupTimeDisplay() {
-  const video = document.body.querySelector("video")!
+  const video = document.body.querySelector("video")
 
   if (video) {
     video.ontimeupdate = (e) => {
