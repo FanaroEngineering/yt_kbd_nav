@@ -21,3 +21,8 @@
 | Thumbnail Navigate Backwards | <kbd>S</kbd>     |
 | Thumbnail Navigate To        | <kbd>Enter</kbd> |
 | Copy Video URL               | <kbd>B</kbd>     |
+
+## References
+
+- [How to Bundle a Chrome Extension with ESBuild](https://github.com/essentialkit/link-previews/blob/main/tools/esbuild.js)
+- [YouTube Kbd Nav browser extension](https://github.com/FanaroEngineering/youtube_kbd_nav)
