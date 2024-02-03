@@ -232,11 +232,10 @@ function likeQuery(isShorts: boolean = false, like: boolean = true) {
       #top-level-buttons-computed > 
       segmented-like-dislike-button-view-model > 
       yt-smartimation > 
-      div > 
-      div > 
+      div > div > 
       ${like ? "" : "dis"}like-button-view-model > 
       toggle-button-view-model > 
-      button > 
+      button-view-model > button > 
       yt-touch-feedback-shape > 
       div > 
       div.yt-spec-touch-feedback-shape__fill
